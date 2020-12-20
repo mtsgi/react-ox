@@ -11,39 +11,18 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sq: Array(9).fill(null),
-      x: true
-    }
-  }
-
-  handleTap(i) {
-    const s = this.state.sq.slice();
-    if (calWinner(s) || s[i]) return;
-    s[i] = this.state.x ? 'X' : 'O';
-    this.setState({ sq: s, x: !this.state.x });
-  }
-
   renderSquare(i) {
     return (
       <Square
-        value={this.state.sq[i]}
-        onTap={() => {this.handleTap(i)}}
+        value={this.props.sq[i]}
+        onTap={() => {this.props.onTap(i)}}
       />
     );
   }
 
   render() {
-    const winner = calWinner(this.state.sq);
-    let status;
-    if (winner) status = `Winner: ${winner}`;
-    else status = `Next player: ${this.state.x ? 'X' : 'O'}`;
-
     return (
       <div>
-        <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -65,14 +44,46 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+  handleTap(i) {
+    const history = this.state.hist;
+    const current = history[history.length - 1];
+    const s = current.sq.slice();
+    if (calcWinner(s) || s[i]) return;
+    s[i] = this.state.x ? 'X' : 'O';
+    this.setState({
+      hist: history.concat([{ sq: s }]),
+      x: !this.state.x
+    });
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      hist: [
+        { sq: Array(9).fill(null) }
+      ],
+      x: true
+    }
+  }
+
   render() {
+    const history = this.state.hist;
+    const current = history[history.length - 1];
+    const winner = calcWinner(current.sq);
+    let status;    
+    if (winner) status = `Winner: ${winner}`;
+    else status = `Next player: ${this.state.x ? 'X' : 'O'}`;
+
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board
+            sq={current.sq}
+            onTap={i => this.handleTap(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
+          <div>{ status }</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
@@ -87,7 +98,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-function calWinner(sq) {
+function calcWinner(sq) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
