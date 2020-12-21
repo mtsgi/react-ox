@@ -44,33 +44,53 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
-  handleTap(i) {
-    const history = this.state.hist;
-    const current = history[history.length - 1];
-    const s = current.sq.slice();
-    if (calcWinner(s) || s[i]) return;
-    s[i] = this.state.x ? 'X' : 'O';
-    this.setState({
-      hist: history.concat([{ sq: s }]),
-      x: !this.state.x
-    });
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       hist: [
         { sq: Array(9).fill(null) }
       ],
+      step: 0,
       x: true
     }
   }
 
+  handleTap(i) {
+    const history = this.state.hist.slice(0, this.state.step + 1);
+    const current = history[history.length - 1];
+    const s = current.sq.slice();
+    if (calcWinner(s) || s[i]) return;
+    s[i] = this.state.x ? 'X' : 'O';
+    this.setState({
+      hist: history.concat([{ sq: s }]),
+      step: history.length,
+      x: !this.state.x
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      step,
+      x: (step % 2) === 0
+    });
+  }
+
   render() {
     const history = this.state.hist;
-    const current = history[history.length - 1];
+    const current = history[this.state.step];
     const winner = calcWinner(current.sq);
-    let status;    
+
+    const moves = history.map((step, move) => {
+      const label = move ?
+        `#${move}へ戻る` :
+        '最初から';
+      return (
+        <li key={move}>
+          <button onClick={() => this.jumpTo(move)}>{label}</button>
+        </li>
+      );
+    });
+    let status;
     if (winner) status = `Winner: ${winner}`;
     else status = `Next player: ${this.state.x ? 'X' : 'O'}`;
 
@@ -84,7 +104,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{ status }</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{ moves }</ol>
         </div>
       </div>
     );
