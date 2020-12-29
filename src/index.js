@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {
+  CommandBar,
+  Stack,
+  DefaultButton,
+  MessageBar
+} from 'office-ui-fabric-react';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+initializeIcons();
 
 function Square(props) {
   return (
@@ -85,28 +93,51 @@ class Game extends React.Component {
         `#${move}へ戻る` :
         '最初から';
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{label}</button>
-        </li>
+        <DefaultButton key={move} onClick={() => this.jumpTo(move)} text={label} />
       );
     });
     let status;
     if (winner) status = `Winner: ${winner}`;
     else status = `Next player: ${this.state.x ? 'X' : 'O'}`;
 
+    const nav = {
+      items: [
+        {
+          key: 'game',
+          text: 'ゲーム',
+          iconProps: { iconName: 'Game' }
+        },
+        {
+          key: 'help',
+          text: 'ヘルプ',
+          iconProps: { iconName: 'Help' }
+        }
+      ]
+    }
+
     return (
-      <div className="game">
+      <main className="game">
+        <nav className="game-nav">React OX</nav>
+        <CommandBar
+          items={nav.items}
+          ariaLabel="Use left and right arrow keys to navigate between commands"
+        />
+        <div className="game-info">
+          <MessageBar
+            isMultiline={false}
+            dismissButtonAriaLabel="Close"
+          >
+            { status }
+          </MessageBar>
+        </div>
         <div className="game-board">
           <Board
             sq={current.sq}
             onTap={i => this.handleTap(i)}
           />
         </div>
-        <div className="game-info">
-          <div>{ status }</div>
-          <ol>{ moves }</ol>
-        </div>
-      </div>
+        <Stack>{ moves }</Stack>
+      </main>
     );
   }
 }
