@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/react-ox/static/css/main.e445e38f.chunk.css",
-    "main.js": "/react-ox/static/js/main.42e8b1d6.chunk.js",
-    "main.js.map": "/react-ox/static/js/main.42e8b1d6.chunk.js.map",
+    "main.css": "/react-ox/static/css/main.5b55a228.chunk.css",
+    "main.js": "/react-ox/static/js/main.4db6e0c0.chunk.js",
+    "main.js.map": "/react-ox/static/js/main.4db6e0c0.chunk.js.map",
     "runtime-main.js": "/react-ox/static/js/runtime-main.ac8be229.js",
     "runtime-main.js.map": "/react-ox/static/js/runtime-main.ac8be229.js.map",
-    "static/js/2.e36c65bb.chunk.js": "/react-ox/static/js/2.e36c65bb.chunk.js",
-    "static/js/2.e36c65bb.chunk.js.map": "/react-ox/static/js/2.e36c65bb.chunk.js.map",
+    "static/js/2.e7bb5c36.chunk.js": "/react-ox/static/js/2.e7bb5c36.chunk.js",
+    "static/js/2.e7bb5c36.chunk.js.map": "/react-ox/static/js/2.e7bb5c36.chunk.js.map",
     "index.html": "/react-ox/index.html",
-    "static/css/main.e445e38f.chunk.css.map": "/react-ox/static/css/main.e445e38f.chunk.css.map",
-    "static/js/2.e36c65bb.chunk.js.LICENSE.txt": "/react-ox/static/js/2.e36c65bb.chunk.js.LICENSE.txt"
+    "static/css/main.5b55a228.chunk.css.map": "/react-ox/static/css/main.5b55a228.chunk.css.map",
+    "static/js/2.e7bb5c36.chunk.js.LICENSE.txt": "/react-ox/static/js/2.e7bb5c36.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ac8be229.js",
-    "static/js/2.e36c65bb.chunk.js",
-    "static/css/main.e445e38f.chunk.css",
-    "static/js/main.42e8b1d6.chunk.js"
+    "static/js/2.e7bb5c36.chunk.js",
+    "static/css/main.5b55a228.chunk.css",
+    "static/js/main.4db6e0c0.chunk.js"
   ]
 }
