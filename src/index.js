@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {
   CommandBar,
-  Stack,
-  DefaultButton,
   MessageBar
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
@@ -92,9 +90,11 @@ class Game extends React.Component {
       const label = move ?
         `#${move}へ戻る` :
         '最初から';
-      return (
-        <DefaultButton key={move} onClick={() => this.jumpTo(move)} text={label} />
-      );
+      return {
+        key: {move},
+        text: label,
+        onClick: () => this.jumpTo(move)
+      };
     });
     let status;
     if (winner) status = `Winner: ${winner}`;
@@ -105,7 +105,10 @@ class Game extends React.Component {
         {
           key: 'game',
           text: 'ゲーム',
-          iconProps: { iconName: 'Game' }
+          iconProps: { iconName: 'Game' },
+          subMenuProps: {
+            items: [ ...moves ]
+          },
         },
         {
           key: 'help',
@@ -136,7 +139,6 @@ class Game extends React.Component {
             onTap={i => this.handleTap(i)}
           />
         </div>
-        <Stack>{ moves }</Stack>
       </main>
     );
   }
